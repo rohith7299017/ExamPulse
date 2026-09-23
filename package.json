@@ -1,0 +1,26 @@
+{
+  "name": "exampulse",
+  "version": "1.0.0",
+  "description": "Exam Pulse Node.js Application",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "node --watch app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rohith7299017/OEM.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/rohith7299017/OEM/issues"
+  },
+  "homepage": "https://github.com/rohith7299017/OEM#readme",
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}
