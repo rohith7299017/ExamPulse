@@ -11,12 +11,9 @@ app.use(express.urlencoded({ extended: true }));
 // Serve static assets from 'public' directory
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Root route
+// Root route - serve home page
 app.get('/', (req, res) => {
-  res.json({
-    message: 'Welcome to Exam Pulse',
-    status: 'online'
-  });
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 // Health check endpoint
@@ -48,7 +45,7 @@ app.use((err, req, res, next) => {
 // Start Server
 if (require.main === module) {
   app.listen(PORT, () => {
-    console.log(`🚀 Exam Pulse server running on http://localhost:${PORT}`);
+    console.log(`Exam Pulse server running on http://localhost:${PORT}`);
   });
 }
 
