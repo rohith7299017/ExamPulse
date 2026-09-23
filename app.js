@@ -16,6 +16,60 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
+// Login page route
+app.get('/login', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'login.html'));
+});
+
+// Mock database for authentication
+const DEMO_USERS = [
+  { email: 'admin@exampulse.com', password: 'password123', name: 'Dr. Sarah Jenkins', role: 'administrator' },
+  { email: 'student@exampulse.com', password: 'password123', name: 'Alex Johnson', role: 'student' },
+  { email: 'proctor@exampulse.com', password: 'password123', name: 'Marcus Vance', role: 'proctor' }
+];
+
+// Authentication API endpoint
+app.post('/api/auth/login', (req, res) => {
+  const { email, password, role } = req.body;
+
+  if (!email || !password) {
+    return res.status(400).json({
+      success: false,
+      message: 'Please provide both email and password.'
+    });
+  }
+
+  const normalizedEmail = email.trim().toLowerCase();
+  const user = DEMO_USERS.find(u => u.email === normalizedEmail);
+
+  if (!user || user.password !== password) {
+    return res.status(401).json({
+      success: false,
+      message: 'Invalid email address or password.'
+    });
+  }
+
+  // Check role match if specified
+  if (role && user.role !== role) {
+    return res.status(403).json({
+      success: false,
+      message: `Account found, but role does not match selected role (${role.toUpperCase()}).`
+    });
+  }
+
+  // Successful login response
+  return res.status(200).json({
+    success: true,
+    message: 'Authentication successful! Redirecting...',
+    user: {
+      name: user.name,
+      email: user.email,
+      role: user.role
+    },
+    token: `demo-token-${Date.now()}`
+  });
+});
+
 // Health check endpoint
 app.get('/api/health', (req, res) => {
   res.status(200).json({
